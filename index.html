@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skillet Mad Libs: Monster</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0d0d13 0%, #1a0f1a 100%);
+      color: #e1e1e6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(25, 25, 35, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 650px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      color: #ff3366;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 2rem;
+      text-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #a0a0b8;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    @media (max-width: 500px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: #ff3366;
+      margin-bottom: 5px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    input {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff3366;
+      box-shadow: 0 0 8px rgba(255, 51, 102, 0.2);
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(90deg, #ff3366, #ff0055);
+      border: none;
+      border-radius: 8px;
+      padding: 14px;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .story-box {
+      background: rgba(0, 0, 0, 0.4);
+      border-left: 4px solid #ff3366;
+      padding: 20px;
+      border-radius: 0 8px 8px 0;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .word {
+      color: #00ffff;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Skillet Mad Libs</h1>
+    <div class="subtitle">The "Monster" Rock Edition</div>
+
+    <div class="form-grid">
+      <div class="input-group">
+        <label for="adj1">Adjective</label>
+        <input type="text" id="adj1" placeholder="e.g. Secret">
+      </div>
+      <div class="input-group">
+        <label for="noun1">Noun</label>
+        <input type="text" id="noun1" placeholder="e.g. Cage">
+      </div>
+      <div class="input-group">
+        <label for="verbIng1">Verb (-ing)</label>
+        <input type="text" id="verbIng1" placeholder="e.g. Screaming">
+      </div>
+      <div class="input-group">
+        <label for="bodyPart">Body Part</label>
+        <input type="text" id="bodyPart" placeholder="e.g. Teeth">
+      </div>
+      <div class="input-group">
+        <label for="place">A Place</label>
+        <input type="text" id="place" placeholder="e.g. Basement">
+      </div>
+      <div class="input-group">
+        <label for="verb1">Base Verb</label>
+        <input type="text" id="verb1" placeholder="e.g. Hide">
+      </div>
+      <div class="input-group">
+        <label for="adj2">Adjective</label>
+        <input type="text" id="adj2" placeholder="e.g. Furious">
+      </div>
+      <div class="input-group">
+        <label for="monsterName">Monster Creature Name</label>
+        <input type="text" id="monsterName" placeholder="e.g. Werewolf">
+      </div>
+    </div>
+
+    <button onclick="generateStory()">Unleash the Monster</button>
+
+    <div id="story" class="story-box"></div>
+  </div>
+
+  <script>
+    function generateStory() {
+      // Gather inputs
+      const adj1 = document.getElementById('adj1').value || '[adjective]';
+      const noun1 = document.getElementById('noun1').value || '[noun]';
+      const verbIng1 = document.getElementById('verbIng1').value || '[verb-ing]';
+      const bodyPart = document.getElementById('bodyPart').value || '[body part]';
+      const place = document.getElementById('place').value || '[place]';
+      const verb1 = document.getElementById('verb1').value || '[verb]';
+      const adj2 = document.getElementById('adj2').value || '[adjective]';
+      const monsterName = document.getElementById('monsterName').value || '[monster]';
+
+      // Build story string
+      const storyText = `The night is dark, and I can feel a <span class="word">${adj1}</span> side of me taking over. It's like a wild <span class="word">${noun1}</span> locked deep inside my chest, just <span class="word">${verbIng1}</span> to break out! My <span class="word">${bodyPart}</span> begin to shake as I try to keep it hidden in the <span class="word">${place}</span>. <br><br>
+      I must <span class="word">${verb1}</span> before anyone sees what I'm becoming. I'm looking in the mirror and staring right at something <span class="word">${adj2}</span>... <br><br>
+      Feel it deep within, it's just beneath the skin! I must confess that I feel like a <strong><span class="word" style="color:#ff3366">${monsterName}</span></strong>!`;
+
+      // Display story
+      const storyBox = document.getElementById('story');
+      storyBox.innerHTML = storyText;
+      storyBox.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
