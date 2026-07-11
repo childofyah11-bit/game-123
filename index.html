@@ -68,6 +68,9 @@
       padding: 0 4px;
       text-align: center;
       transition: all 0.2s ease;
+      /* Masks the characters natively in almost all modern browsers */
+      -webkit-text-security: disc;
+      text-security: disc;
     }
     .madlib-input:focus {
       outline: none;
@@ -93,7 +96,7 @@
       box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
     }
     .word-reveal {
-      color: #ef4444;
+      color: #38bdf8;
       font-weight: bold;
       text-decoration: underline;
     }
@@ -105,14 +108,12 @@
   <h1>Rock Anthem Libs</h1>
   <div class="subtitle">Full Song Edition: Monster by Skillet</div>
   
-  <!-- Interactive scroll box containing the song parser -->
   <div id="lyrics-board" class="game-scroll-box">Loading stage...</div>
   
   <button onclick="revealMadLib()">Unleash the Anthem</button>
 </div>
 
 <script>
-// Complete official lyrics text for Skillet's "Monster"
 const fullSongText = `The secret side of me, I never let you see
 I keep it caged but I can't control it
 So stay away from me, the beast is ugly
@@ -154,7 +155,6 @@ I must confess that I feel like a monster
 I, I feel like a monster
 I, I feel like a monster`;
 
-// Split by whitespace chunks to accurately filter words while retaining structure
 const elementsArray = fullSongText.split(/(\s+)/);
 
 function initGame() {
@@ -163,17 +163,16 @@ function initGame() {
   let realWordCounter = 0;
 
   elementsArray.forEach((token, index) => {
-    // If it's a visible word (not empty whitespace or lines)
     if (token.trim() !== "") {
       realWordCounter++;
-      // Every 3rd word gets swapped for a clean input slot
       if (realWordCounter % 3 === 0) {
+        /* Input uses text-security style rule instead of type="password" to support custom placeholders */
         outputHtml += `<input type="text" class="madlib-input" id="blank-${index}" placeholder="...">`;
       } else {
         outputHtml += token;
       }
     } else {
-      outputHtml += token; // Keep line breaks (\n) and spaces as they are
+      outputHtml += token;
     }
   });
 
@@ -186,7 +185,6 @@ function revealMadLib() {
   elementsArray.forEach((token, index) => {
     const matchingInput = document.getElementById(`blank-${index}`);
     if (matchingInput) {
-      // Plug in what the user typed (or underscores if left blank)
       const userValue = matchingInput.value.trim() || "______";
       finishedHtml += `<span class="word-reveal">${userValue}</span>`;
     } else {
@@ -197,7 +195,6 @@ function revealMadLib() {
   document.getElementById('lyrics-board').innerHTML = finishedHtml;
 }
 
-// Fire up the generator when page files execute
 window.onload = initGame;
 </script>
 
