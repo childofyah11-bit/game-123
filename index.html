@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mad Libs</title>
+  <title>Mad Lib</title>
   <style>
     * {
       margin: 0;
@@ -31,50 +31,42 @@
       padding: 30px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
-    h1 {
-      color: #ef4444;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 5px;
-      text-align: center;
-      font-size: 2rem;
-      text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
-    }
-    .subtitle {
-      text-align: center;
-      color: #9ca3af;
-      margin-bottom: 25px;
-      font-size: 0.95rem;
-    }
     .game-scroll-box {
-      max-height: 60vh;
+      max-height: 70vh;
       overflow-y: auto;
       background: rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 8px;
       padding: 20px;
-      line-height: 2.3;
+      line-height: 2.5;
       white-space: pre-wrap;
       font-size: 1.05rem;
       margin-bottom: 20px;
     }
     .madlib-input {
-      background: rgba(239, 68, 68, 0.1);
+      background: rgba(239, 68, 68, 0.15);
       border: none;
       border-bottom: 2px solid #ef4444;
       color: #38bdf8;
-      width: 100px;
-      font-size: 1rem;
-      padding: 0 4px;
+      width: 130px;
+      font-size: 0.9rem;
+      padding: 0 6px;
       text-align: center;
+      margin: 0 4px;
+      border-radius: 4px 4px 0 0;
       transition: all 0.2s ease;
-      /* Masks the characters natively in almost all modern browsers */
       -webkit-text-security: disc;
       text-security: disc;
     }
+    .madlib-input::placeholder {
+      color: #ef4444;
+      opacity: 0.7;
+      -webkit-text-security: none;
+      text-security: none;
+    }
     .madlib-input:focus {
       outline: none;
-      background: rgba(239, 68, 68, 0.25);
+      background: rgba(239, 68, 68, 0.3);
       border-bottom-color: #38bdf8;
     }
     button {
@@ -99,52 +91,49 @@
       color: #38bdf8;
       font-weight: bold;
       text-decoration: underline;
+      margin: 0 2px;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>Rock Anthem Libs</h1>
-  <div class="subtitle">Full Song Edition: Monster by Skillet</div>
-  
-  <div id="lyrics-board" class="game-scroll-box">Loading stage...</div>
-  
+  <div id="lyrics-board" class="game-scroll-box">Loading game board...</div>
   <button onclick="revealMadLib()">Unleash the Anthem</button>
 </div>
 
 <script>
-const fullSongText = `The secret side of me, I never let you see
-I keep it caged but I can't control it
-So stay away from me, the beast is ugly
-I feel the rage and I just can't hold it
+const taggedLyrics = `The [Adjective:secret] side of me, I never let you [Verb:see]
+I keep it [Adjective:caged] but I can't [Verb:control] it
+So stay [Direction:away] from me, the [Noun:beast] is ugly
+I feel the [Noun:rage] and I just can't [Verb:hold] it
 
-It's scratching on the walls, in the closet, in the halls
-It comes awake and I can't control it
-Hiding under the bed, in my body, in my head
+It's [Verb-ing:scratching] on the walls, in the [Noun:closet], in the halls
+It comes [Adjective:awake] and I can't control it
+[Verb-ing:Hiding] under the [Noun:bed], in my [Body Part:body], in my [Body Part:head]
+Why won't [Noun:somebody] come and save me from this, make it [Verb:end]?
+
+I feel it [Adverb:deep] within, it's just beneath the [Noun:skin]
+I must [Verb:confess] that I feel like a [Noun:monster]
+I [Verb:hate] what I've [Verb:become], the [Noun:nightmare's] just begun
+I must confess that I feel like a [Noun:monster]
+I, I feel like a [Noun:monster]
+I, I feel like a [Noun:monster]
+
+My secret side I keep hid under [Noun:lock] and key
+I keep it caged but I can't control it
+'Cause if I let him [Direction:out], he'll tear me up, [Verb:break] me down
 Why won't somebody come and save me from this, make it end?
 
 I feel it deep within, it's just beneath the skin
 I must confess that I feel like a monster
 I hate what I've become, the nightmare's just begun
 I must confess that I feel like a monster
-I, I feel like a monster
-I, I feel like a monster
 
-My secret side I keep hid under lock and key
-I keep it caged but I can't control it
-'Cause if I let him out, he'll tear me up, break me down
-Why won't somebody come and save me from this, make it end?
-
-I feel it deep within, it's just beneath the skin
-I must confess that I feel like a monster
-I hate what I've become, the nightmare's just begun
-I must confess that I feel like a monster
-
-It's hiding in the dark, its teeth are razor sharp
-There's no escape for me, it wants my soul, it wants my heart
-No one can hear me scream, maybe it's just a dream
-Maybe it's inside of me, stop this monster!
+It's hiding in the [Noun:dark], its [Body Part:teeth] are razor sharp
+There's no [Noun:escape] for me, it wants my [Noun:soul], it wants my [Body Part:heart]
+No one can [Verb:hear] me scream, maybe it's just a [Noun:dream]
+Maybe it's [Preposition:inside] of me, stop this [Noun:monster]!
 
 I feel it deep within, it's just beneath the skin
 I must confess that I feel like a monster
@@ -152,26 +141,28 @@ I hate what I've become, the nightmare's just begun
 I must confess that I feel like a monster
 I feel it deep within, it's just beneath the skin
 I must confess that I feel like a monster
-I, I feel like a monster
-I, I feel like a monster`;
+I, I feel like a [Noun:monster]
+I, I feel like a [Noun:monster]`;
 
-const elementsArray = fullSongText.split(/(\s+)/);
+let structuralTokens = [];
 
 function initGame() {
   const board = document.getElementById('lyrics-board');
+  const regex = /(\[[^\]]+\]|\s+|\S+)/g;
+  const matches = taggedLyrics.match(regex) || [];
   let outputHtml = "";
-  let realWordCounter = 0;
 
-  elementsArray.forEach((token, index) => {
-    if (token.trim() !== "") {
-      realWordCounter++;
-      if (realWordCounter % 3 === 0) {
-        /* Input uses text-security style rule instead of type="password" to support custom placeholders */
-        outputHtml += `<input type="text" class="madlib-input" id="blank-${index}" placeholder="...">`;
-      } else {
-        outputHtml += token;
-      }
+  matches.forEach((token, index) => {
+    if (token.startsWith('[') && token.endsWith(']')) {
+      const innerContent = token.slice(1, -1);
+      const splitIndex = innerContent.indexOf(':');
+      const prompt = innerContent.substring(0, splitIndex);
+      const originalValue = innerContent.substring(splitIndex + 1);
+
+      structuralTokens.push({ isBlank: true, original: originalValue, id: `blank-${index}` });
+      outputHtml += `<input type="text" class="madlib-input" id="blank-${index}" placeholder="${prompt}">`;
     } else {
+      structuralTokens.push({ isBlank: false, text: token });
       outputHtml += token;
     }
   });
@@ -182,13 +173,14 @@ function initGame() {
 function revealMadLib() {
   let finishedHtml = "";
 
-  elementsArray.forEach((token, index) => {
-    const matchingInput = document.getElementById(`blank-${index}`);
-    if (matchingInput) {
-      const userValue = matchingInput.value.trim() || "______";
-      finishedHtml += `<span class="word-reveal">${userValue}</span>`;
+  structuralTokens.forEach((token) => {
+    if (token.isBlank) {
+      const inputElement = document.getElementById(token.id);
+      const userValue = inputElement ? inputElement.value.trim() : "";
+      const finalWord = userValue || "______";
+      finishedHtml += `<span class="word-reveal">${finalWord}</span>`;
     } else {
-      finishedHtml += token;
+      finishedHtml += token.text;
     }
   });
 
@@ -197,6 +189,9 @@ function revealMadLib() {
 
 window.onload = initGame;
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
