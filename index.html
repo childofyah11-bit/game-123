@@ -2,212 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rock Mad Libs: Spiritual Victory</title>
+  <title>Monster Mad Libs</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #0a0e17 0%, #111827 100%);
-      color: #e5e7eb;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .container {
-      background: rgba(31, 41, 55, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 650px;
-      padding: 30px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    }
-
-    h1 {
-      color: #3b82f6;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-      text-align: center;
-      font-size: 2rem;
-      text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #9ca3af;
-      margin-bottom: 25px;
-      font-size: 0.95rem;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    @media (max-width: 500px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      color: #3b82f6;
-      margin-bottom: 5px;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    input {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 10px 14px;
-      color: #fff;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
-    }
-
-    button {
-      width: 100%;
-      background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-      border: none;
-      border-radius: 8px;
-      padding: 14px;
-      color: white;
-      font-size: 1rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      margin-bottom: 20px;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    .story-box {
-      background: rgba(0, 0, 0, 0.5);
-      border-left: 4px solid #3b82f6;
-      padding: 20px;
-      border-radius: 0 8px 8px 0;
-      line-height: 1.6;
-      font-size: 1.1rem;
-      display: none;
-      animation: fadeIn 0.5s ease forwards;
-    }
-
-    .word {
-      color: #60a5fa;
-      font-weight: bold;
-      text-decoration: underline;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    body { background-color: #111827; color: #f3f4f6; font-family: sans-serif; padding: 2rem; display: flex; justify-content: center; }
+    .container { max-width: 700px; background: #1f2937; padding: 2rem; border-radius: 12px; }
+    h1 { color: #ef4444; }
+    #game-board { line-height: 2.2; white-space: pre-wrap; background: #111827; padding: 1.5rem; border-radius: 8px; }
+    .madlib-input { background: #374151; border: 1px solid #4b5563; color: #38bdf8; width: 90px; text-align: center; }
+    button { background-color: #ef4444; color: white; border: none; padding: 0.75rem 1.5rem; margin-top: 1rem; width: 100%; cursor: pointer; }
+    .completed-word { color: #38bdf8; font-weight: bold; }
   </style>
 </head>
 <body>
+<div class="container">
+  <h1>Rock Anthem Libs: Monster</h1>
+  <div id="game-board">Loading...</div>
+  <button onclick="unleashStory()"></button>
+</div>
+<script>
+const originalLyrics = `The secret side of me... (full lyrics in code)`;
+const elementsArray = originalLyrics.split(/(\s+)/);
 
-  <div class="container">
-    <h1>Rock Anthem Libs</h1>
-    <div class="subtitle">The Overcomer Victory Edition</div>
+function setupGame() {
+  const board = document.getElementById('game-board');
+  let htmlOutput = "";
+  let wordCount = 0;
+  elementsArray.forEach((part, index) => {
+    if (part.trim() !== "") {
+      wordCount++;
+      htmlOutput += (wordCount % 3 === 0) ? `<input type="text" class="madlib-input" id="word-${index}">` : part;
+    } else { htmlOutput += part; }
+  });
+  board.innerHTML = htmlOutput;
+}
 
-    <div class="form-grid">
-      <div class="input-group">
-        <label for="adj1">Adjective</label>
-        <input type="text" id="adj1" placeholder="e.g. Hidden">
-      </div>
-      <div class="input-group">
-        <label for="noun1">Noun</label>
-        <input type="text" id="noun1" placeholder="e.g. Battle">
-      </div>
-      <div class="input-group">
-        <label for="verbIng1">Verb (-ing)</label>
-        <input type="text" id="verbIng1" placeholder="e.g. Fighting">
-      </div>
-      <div class="input-group">
-        <label for="bodyPart">Body Part</label>
-        <input type="text" id="bodyPart" placeholder="e.g. Hands">
-      </div>
-      <div class="input-group">
-        <label for="place">A Place</label>
-        <input type="text" id="place" placeholder="e.g. Valley">
-      </div>
-      <div class="input-group">
-        <label for="verb1">Base Verb</label>
-        <input type="text" id="verb1" placeholder="e.g. Stand">
-      </div>
-      <div class="input-group">
-        <label for="adj2">Adjective</label>
-        <input type="text" id="adj2" placeholder="e.g. Glorious">
-      </div>
-      <div class="input-group">
-        <label for="roleName">Title / Noun</label>
-        <input type="text" id="roleName" placeholder="e.g. Overcomer">
-      </div>
-    </div>
-
-    <button onclick="generateStory()">Unleash the Anthem</button>
-
-    <div id="story" class="story-box"></div>
-  </div>
-
-  <script>
-    function generateStory() {
-      const adj1 = document.getElementById('adj1').value || '[adjective]';
-      const noun1 = document.getElementById('noun1').value || '[noun]';
-      const verbIng1 = document.getElementById('verbIng1').value || '[verb-ing]';
-      const bodyPart = document.getElementById('bodyPart').value || '[body part]';
-      const place = document.getElementById('place').value || '[place]';
-      const verb1 = document.getElementById('verb1').value || '[verb]';
-      const adj2 = document.getElementById('adj2').value || '[adjective]';
-      const roleName = document.getElementById('roleName').value || '[title]';
-
-      const storyText = `The night is dark, and I can feel a <span class="word">${adj1}</span> shift inside of me taking over. It's like a wild <span class="word">${noun1}</span> locked deep inside my chest, just <span class="word">${verbIng1}</span> to break out! My <span class="word">${bodyPart}</span> begin to shake as I try to keep it steady in this <span class="word">${place}</span>. <br><br>
-      I must <span class="word">${verb1}</span> before the shadows take what I'm becoming. I'm looking in the mirror and staring right at something <span class="word">${adj2}</span>... <br><br>
-      Feel the light deep within, rewriting everything under the skin! My faith breaks the silence, and I know that I stand as an absolute <strong><span class="word" style="color:#3b82f6">${roleName}</span></strong>!`;
-
-      const storyBox = document.getElementById('story');
-      storyBox.innerHTML = storyText;
-      storyBox.style.display = 'block';
-    }
-  </script>
-
+function unleashStory() {
+  let completedOutput = "";
+  elementsArray.forEach((part, index) => {
+    const inputElement = document.getElementById(`word-${index}`);
+    completedOutput += inputElement ? `<span class="completed-word">${inputElement.value || "_____"}</span>` : part;
+  });
+  document.getElementById('game-board').innerHTML = completedOutput;
+}
+window.onload = setupGame;
+</script>
 </body>
 </html>
